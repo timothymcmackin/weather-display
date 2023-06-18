@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 
   weatherDB.connect();
 
-  const rows = await weatherDB.query('SELECT * from records limit 10;')
+  const rows = await weatherDB.query('SELECT * from records order by datestamp DESC limit 30;')
     .catch(console.error);
 
   const weatherData = rows.map(({
@@ -27,8 +27,8 @@ router.get('/', async function(req, res, next) {
     day: formatDay(datestamp),
     time: formatTime(datestamp),
     dayOfWeek: datestamp.getDay(),
-    temp_f_from_hum,
-    temp_f_from_bar,
+    temp_f_from_hum: (+temp_f_from_hum).toFixed(1),
+    temp_f_from_bar: (+temp_f_from_bar).toFixed(1),
     humidity,
     pressure,
   }))
