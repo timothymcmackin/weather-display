@@ -1,7 +1,22 @@
 <h1>{{title}}</h1>
-<p>Welcome to the {{title}}</p>
-<ul>
-{{#each weatherData}}
-  <li>{{this.datestamp}}
-{{/each}}
-</ul>
+<p>Live data from the {{title}}</p>
+<table>
+  <thead>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Temp (from humidity sensor)</th>
+    <th>Temp (from barometer)</th>
+    <th>Humidity</th>
+    <th>Pressure</th>
+  </thead>
+  {{#each weatherData}}
+    <tr>
+      <td>{{day}}</td>
+      <td>{{time}}</td>
+      <td>{{temp_f_from_hum}} F</td>
+      <td>{{temp_f_from_bar}} F</td>
+      <td>{{humidity}} %</td>
+      <td>{{pressure}} pa</td>
+    </tr>
+  {{/each}}
+</table>

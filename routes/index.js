@@ -17,12 +17,49 @@ router.get('/', async function(req, res, next) {
   const rows = await weatherDB.query('SELECT * from records limit 10;')
     .catch(console.error);
 
+  const weatherData = rows.map(({
+    datestamp,
+    temp_f_from_hum,
+    humidity,
+    temp_f_from_bar,
+    pressure,
+  }) => ({
+    day: formatDay(datestamp),
+    time: formatTime(datestamp),
+    dayOfWeek: datestamp.getDay(),
+    temp_f_from_hum,
+    temp_f_from_bar,
+    humidity,
+    pressure,
+  }))
+
   weatherDB.close();
   res.render('index', {
     title: 'Oak House Weather Station',
-    weatherData: rows,
+    weatherData,
   });
 });
+
+const daysOfWeek = [
+  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+];
+
+const months = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec',
+];
+
+const formatDay = (date) => {
+  const dayOfWeek = daysOfWeek[date.getDay()];
+  const month = months[date.getMonth()];
+  return `${dayOfWeek}, ${month} ${date.getDate()}`;
+}
+
+const formatTime = (datestamp) => {
+  const hour = datestamp.getHours() == 0 ? '00' : datestamp.getHours().toString();
+  const minuteAsString = datestamp.getMinutes().toString();
+  const minute = minuteAsString.length === 1 ? '0' + minuteAsString : minuteAsString;
+  return hour + ':' + minute;
+}
 
 // https://codeburst.io/node-js-mysql-and-promises-4c3be599909b
 class Database {
