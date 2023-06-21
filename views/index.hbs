@@ -24,20 +24,28 @@
 <div>
   <canvas id="humidityChart"></canvas>
 </div>
+<div>
+  <canvas id="pressureChart"></canvas>
+</div>
+<div>
+  <canvas id="temperatureChart"></canvas>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
 
 <script>
-  const ctx = document.getElementById('humidityChart');
+  const humidityChartTag = document.getElementById('humidityChart');
+  const pressureChartTag = document.getElementById('pressureChart');
+  const temperatureChartChartTag = document.getElementById('temperatureChart');
 
-  new Chart(ctx, {
+  new Chart(humidityChartTag, {
     type: 'line',
     data: {
       labels: [
-          {{#each humidityLabels}}
-          "{{this}}",
+          {{#each timeLabels}}
+            "{{this}}",
           {{/each}}
         ],
       datasets: [{
@@ -47,8 +55,8 @@
           "{{this}}",
           {{/each}}
         ],
-        borderWidth: 1
-      }]
+        borderWidth: 1,
+      }],
     },
     options: {
       scales: {
@@ -59,8 +67,84 @@
         x: {
           type: "time",
           time: {
-              unit: 'hour'
-          }
+            unit: 'hour',
+          },
+        },
+      },
+    },
+  });
+
+  new Chart(pressureChartTag, {
+    type: 'line',
+    data: {
+      labels: [
+          {{#each timeLabels}}
+            "{{this}}",
+          {{/each}}
+        ],
+      datasets: [{
+        label: 'Pressure in pa',
+        data:  [
+          {{#each weatherData}}
+          "{{pressure}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      scales: {
+        x: {
+          type: "time",
+          time: {
+            unit: 'hour',
+          },
+        },
+      },
+    },
+  });
+
+  new Chart(temperatureChartChartTag, {
+    type: 'line',
+    data: {
+      labels: [
+          {{#each timeLabels}}
+            "{{this}}",
+          {{/each}}
+        ],
+      datasets: [{
+        label: 'Temp from barometer',
+        data:  [
+          {{#each weatherData}}
+            "{{temp_f_from_bar}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      },{
+        label: 'Temp from humidity sensor',
+        data:  [
+          {{#each weatherData}}
+            "{{temp_f_from_hum}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      },{
+        label: 'Average',
+        data:  [
+          {{#each weatherData}}
+            "{{averageTemp}}",
+          {{/each}}
+        ],
+        borderWidth: 3,
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          type: "time",
+          time: {
+            unit: 'hour',
+          },
         },
       },
     },
