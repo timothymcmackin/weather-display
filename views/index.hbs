@@ -20,3 +20,49 @@
     </tr>
   {{/each}}
 </table>
+
+<div>
+  <canvas id="humidityChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+
+<script>
+  const ctx = document.getElementById('humidityChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+          {{#each humidityLabels}}
+          "{{this}}",
+          {{/each}}
+        ],
+      datasets: [{
+        label: 'Humidity in %',
+        data:  [
+          {{#each humidityPercents}}
+          "{{this}}",
+          {{/each}}
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          suggestedMin: {{humidityMin}},
+          suggestedMax: {{humidityMax}},
+        },
+        x: {
+          type: "time",
+          time: {
+              unit: 'hour'
+          }
+        },
+      },
+    },
+  });
+</script>

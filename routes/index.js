@@ -24,6 +24,7 @@ router.get('/', async function(req, res, next) {
     temp_f_from_bar,
     pressure,
   }) => ({
+    datestamp,
     day: formatDay(datestamp),
     time: formatTime(datestamp),
     dayOfWeek: datestamp.getDay(),
@@ -33,10 +34,18 @@ router.get('/', async function(req, res, next) {
     pressure,
   }))
 
+  const humidityLabels = weatherData.map(({datestamp}) => datestamp);
+  const humidityPercents = weatherData.map(({humidity}) => humidity);
+  const humidityMin = Math.max(Math.min(...humidityPercents) - 5, 0);
+  const humidityMax = Math.min(Math.max(...humidityPercents) + 5, 100);
   weatherDB.close();
   res.render('index', {
     title: 'Oak House Weather Station',
     weatherData,
+    humidityPercents,
+    humidityLabels,
+    humidityMin,
+    humidityMax,
   });
 });
 

@@ -8,6 +8,7 @@
     "scss": "sass --watch scss/main.scss public/build/styles/style.css"
   },
   "dependencies": {
+    "chart.js": "^4.3.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -18,6 +19,20 @@
     "sass": "^1.63.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "assert": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^5.5.0||^6.0.0",
+    "crypto-browserify": "^3.12.0",
+    "events": "^3.1.0",
+    "nodemon": "^2.0.22",
+    "path-browserify": "^1.0.0",
+    "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.1.0",
+    "string_decoder": "^1.3.0",
+    "timers-browserify": "^2.0.11",
+    "url": "^0.11.0",
+    "util": "^0.12.3"
   }
 }
