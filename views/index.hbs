@@ -23,6 +23,14 @@
 
   Chart.defaults.font.size = 16;
 
+  const fontFunction = (context) => {
+    const width = context.chart.width;
+    const size = width < 760 ? 32 : Math.round(width / 42);
+    return {
+      size,
+    };
+  };
+
   new Chart(humidityChartTag, {
     type: 'line',
     data: {
@@ -46,6 +54,7 @@
         title: {
           display: true,
           text: "Humidity in %",
+          font: fontFunction,
         },
         legend: {
           display: false,
@@ -56,11 +65,17 @@
         y: {
           suggestedMin: {{humidityMin}},
           suggestedMax: {{humidityMax}},
+          ticks: {
+            font: fontFunction,
+          },
         },
         x: {
           type: "time",
           time: {
             unit: 'hour',
+          },
+          ticks: {
+            font: fontFunction,
           },
         },
       },
@@ -93,12 +108,21 @@
           time: {
             unit: 'hour',
           },
+          ticks: {
+            font: fontFunction,
+          },
+        },
+        y: {
+          ticks: {
+            font: fontFunction,
+          },
         },
       },
       plugins: {
         title: {
           display: true,
           text: "Pressure in pa",
+          font: fontFunction,
         },
         legend: {
           display: false,
@@ -149,15 +173,27 @@
           time: {
             unit: 'hour',
           },
+          ticks: {
+            font: fontFunction,
+          },
+        },
+        y: {
+          ticks: {
+            font: fontFunction,
+          },
         },
       },
       plugins: {
         title: {
           display: true,
           text: "Temperature in F",
+          font: fontFunction,
         },
         legend: {
-          display: true,
+          display: (context) => (context.chart.width > 760),
+          labels: {
+            font: fontFunction,
+          },
         },
       },
     },
