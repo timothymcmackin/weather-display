@@ -1,0 +1,201 @@
+<h1>{{title}}</h1>
+
+<div class="charts">
+<div>
+  <canvas id="humidityChart"></canvas>
+</div>
+<div>
+  <canvas id="pressureChart"></canvas>
+</div>
+<div>
+  <canvas id="temperatureChart"></canvas>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+
+<script>
+  const humidityChartTag = document.getElementById('humidityChart');
+  const pressureChartTag = document.getElementById('pressureChart');
+  const temperatureChartChartTag = document.getElementById('temperatureChart');
+
+  Chart.defaults.font.size = 16;
+
+  const fontFunction = (context) => {
+    const width = context.chart.width;
+    const size = width < 760 ? 32 : Math.round(width / 42);
+    return {
+      size,
+    };
+  };
+
+  new Chart(humidityChartTag, {
+    type: 'line',
+    data: {
+      labels: [
+          {{#each timeLabels}}
+            "{{this}}",
+          {{/each}}
+        ],
+      datasets: [{
+        label: 'Humidity in %',
+        data:  [
+          {{#each humidityPercents}}
+          "{{this}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Humidity in %",
+          font: fontFunction,
+        },
+        legend: {
+          display: false,
+        },
+      },
+      responsive: true,
+      scales: {
+        y: {
+          suggestedMin: {{humidityMin}},
+          suggestedMax: {{humidityMax}},
+          ticks: {
+            font: fontFunction,
+          },
+        },
+        x: {
+          type: "time",
+          time: {
+            unit: 'hour',
+          },
+          ticks: {
+            font: fontFunction,
+          },
+        },
+      },
+    },
+  });
+
+  new Chart(pressureChartTag, {
+    type: 'line',
+    data: {
+      labels: [
+          {{#each timeLabels}}
+            "{{this}}",
+          {{/each}}
+        ],
+      datasets: [{
+        label: 'Pressure in pa',
+        data:  [
+          {{#each weatherData}}
+          "{{pressure}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          type: "time",
+          time: {
+            unit: 'hour',
+          },
+          ticks: {
+            font: fontFunction,
+          },
+        },
+        y: {
+          ticks: {
+            font: fontFunction,
+          },
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "Pressure in pa",
+          font: fontFunction,
+        },
+        legend: {
+          display: false,
+        },
+      },
+    },
+  });
+
+  new Chart(temperatureChartChartTag, {
+    type: 'line',
+    data: {
+      labels: [
+          {{#each timeLabels}}
+            "{{this}}",
+          {{/each}}
+        ],
+      datasets: [{
+        label: 'Temp from barometer',
+        data:  [
+          {{#each weatherData}}
+            "{{temp_f_from_bar}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      },{
+        label: 'Temp from humidity sensor',
+        data:  [
+          {{#each weatherData}}
+            "{{temp_f_from_hum}}",
+          {{/each}}
+        ],
+        borderWidth: 1,
+      },{
+        label: 'Average',
+        data:  [
+          {{#each weatherData}}
+            "{{averageTemp}}",
+          {{/each}}
+        ],
+        borderWidth: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          type: "time",
+          time: {
+            unit: 'hour',
+          },
+          ticks: {
+            font: fontFunction,
+          },
+        },
+        y: {
+          ticks: {
+            font: fontFunction,
+          },
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "Temperature in F",
+          font: fontFunction,
+        },
+        legend: {
+          display: (context) => (context.chart.width > 760),
+          labels: {
+            font: fontFunction,
+          },
+        },
+      },
+    },
+  });
+</script>
