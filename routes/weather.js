@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 
   weatherDB.connect();
 
-  const rows = await weatherDB.query('SELECT * from records order by datestamp DESC limit 30;')
+  const rows = await weatherDB.query('SELECT * from records order by datestamp DESC limit 60;')
     .catch(console.error);
 
   const weatherData = rows.map(({
