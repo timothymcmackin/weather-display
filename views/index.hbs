@@ -22,6 +22,8 @@
   const pressureChartTag = document.getElementById('pressureChart');
   const temperatureChartChartTag = document.getElementById('temperatureChart');
 
+  Chart.defaults.font.size = 16;
+
   new Chart(humidityChartTag, {
     type: 'line',
     data: {
