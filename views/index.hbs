@@ -1,25 +1,5 @@
 <h1>{{title}}</h1>
 <p>Live data from the {{title}}</p>
-<table>
-  <thead>
-    <th>Date</th>
-    <th>Time</th>
-    <th>Temp<br/>(from humidity sensor)</th>
-    <th>Temp<br/>(from barometer)</th>
-    <th>Humidity</th>
-    <th>Pressure</th>
-  </thead>
-  {{#each weatherData}}
-    <tr>
-      <td>{{day}}</td>
-      <td>{{time}}</td>
-      <td>{{temp_f_from_hum}} F</td>
-      <td>{{temp_f_from_bar}} F</td>
-      <td>{{humidity}} %</td>
-      <td>{{pressure}} pa</td>
-    </tr>
-  {{/each}}
-</table>
 
 <div>
   <canvas id="humidityChart"></canvas>
@@ -59,6 +39,16 @@
       }],
     },
     options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Humidity in %",
+        },
+        legend: {
+          display: false,
+        },
+      },
+      responsive: true,
       scales: {
         y: {
           suggestedMin: {{humidityMin}},
@@ -93,12 +83,22 @@
       }],
     },
     options: {
+      responsive: true,
       scales: {
         x: {
           type: "time",
           time: {
             unit: 'hour',
           },
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "Pressure in pa",
+        },
+        legend: {
+          display: false,
         },
       },
     },
@@ -139,12 +139,22 @@
       }]
     },
     options: {
+      responsive: true,
       scales: {
         x: {
           type: "time",
           time: {
             unit: 'hour',
           },
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "Temperature in F",
+        },
+        legend: {
+          display: true,
         },
       },
     },
