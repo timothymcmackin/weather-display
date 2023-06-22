@@ -10,6 +10,11 @@ router.get('/', async function(req, res, next) {
       description: 'Live data from the Oak House weather station',
       path: './weather',
     },
+    {
+      title: 'Home page',
+      description: 'Tim\'s personal site, resume, and portfolio',
+      path: 'https://timothymcmack.in',
+    },
   ];
 
   res.render('index', {
