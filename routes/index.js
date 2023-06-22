@@ -42,7 +42,7 @@ router.get('/', async function(req, res, next) {
 
   weatherDB.close();
   res.render('index', {
-    title: 'Oak House Weather Station',
+    title: 'Live data from the Oak House weather station',
     weatherData,
     humidityPercents,
     timeLabels,

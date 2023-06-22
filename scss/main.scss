@@ -72,6 +72,11 @@ only screen and (max-width: 760px),
 		white-space: nowrap;
 	}
 
+	/* Set the styles for charts.js on smaller screen sizes */
+	h1 {
+		font-size: 5em;
+	}
+
 }
 
 div.charts {
